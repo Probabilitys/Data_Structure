@@ -1,5 +1,6 @@
 /**
  * IndexList (aka Vector) ADT
+ * extends the notion of array by storing a sequence of arbitrary obj
  */
 
 public interface IndexList<E> {
