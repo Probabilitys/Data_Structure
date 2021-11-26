@@ -10,8 +10,6 @@ private class ElementIterator implements Iterator<E> {
 /** Returns an iterator of the elements stored in the tree. */
 public Iterator<E> iterator() { return new ElementIterator(); }
 
-
-
 // The method of traversal could be varied.
 public Iterable<Position<E>> positions() { return preorder(); }
 
@@ -69,3 +67,19 @@ public Iterable<Position<E>> inorder() {
 public Iterable<Position<E>> position() {
     return inorder();  // can use other traversal mehtods
 }
+
+// breadth first order
+/** Returns an iterable collection of positions of the tree in breadth-first order. */
+public Iterable<Position<E>> breadthfirst() {
+    List<Position<E>> snapshot = new ArrayList<>();
+    if (!isEmpty()) {
+        Queue<Position<E>> fringe = new LinkedQueue<>();
+        fringe.enqueue(root());
+        while(!fringe.isEmpty()) {
+            Positon<E> p = fringe.dequeue();
+            snapshot.add(p);
+            for (Position<E> c: children(p))
+                fringe.enqueue(c);
+    }
+    return snapshot;
+ }
