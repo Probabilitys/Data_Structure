@@ -1,8 +1,6 @@
 # Discrete-Structure-Algorithm
-- **Linked List**
-  1. Singly Linked List
+- **Singly/Doubly Linked List**
     - Node
-  2. Doubly Linked List
     - DLNode
 - **Stack**
   - Stack
@@ -14,7 +12,7 @@
   - NodeDeque
 - **Position**
   - Position
-- **Vector / IndexList**
+- **Vector / Index List**
   - IndexList
 - **List**
   - PositionalList
