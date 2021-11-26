@@ -23,7 +23,7 @@
 - **Sequence**
   - Sequence
 - **Iterator**
-- **Tree*
+- **Tree**
   - Tree
   - AbstractTree
   - AbstractBinaryTree
