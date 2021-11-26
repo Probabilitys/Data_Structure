@@ -14,6 +14,7 @@
   - Position
 - **Vector / Index List**
   - IndexList
+  - ArrayVector
 - **List**
   - PositionalList
   - LinkedPositionalList
