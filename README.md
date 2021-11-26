@@ -31,3 +31,8 @@
   - AbstractBinaryTree
   - LinkedBinaryTree
   - TreeIterator
+- **Priority Queue**
+  - Entry
+  - PQEntry
+  - AbstractPriorityQueue
+  - UnsortedPriorityQueue
