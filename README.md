@@ -25,6 +25,7 @@
 - **Tree**
   - Tree
   - AbstractTree
+  - BinaryTree
   - AbstractBinaryTree
   - LinkedBinaryTree
   - TreeIterator
