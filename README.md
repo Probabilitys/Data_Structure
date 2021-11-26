@@ -22,6 +22,8 @@
 - **Sequence**
   - Sequence
 - **Iterator**
+  - Iterable
+  - Iterator
 - **Tree**
   - Tree
   - AbstractTree
