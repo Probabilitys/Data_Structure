@@ -35,3 +35,4 @@
   - PQEntry
   - AbstractPriorityQueue
   - UnsortedPriorityQueue
+  - SortedPriorityQueue
