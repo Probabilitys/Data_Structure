@@ -1,7 +1,6 @@
 # Discrete-Structure-Algorithm
 - **Singly/Doubly Linked List**
-    - Node
-    - DLNode
+    - Node / DLNode
 - **Stack**
   - Stack
   - NodeStack
@@ -31,8 +30,7 @@
   - TreeIterator
 - **Comparable / Comparator**
 - **Priority Queue**
-  - Entry
-  - PQEntry
+  - Entry / PQEntry
   - AbstractPriorityQueue
   - UnsortedPriorityQueue
   - SortedPriorityQueue
