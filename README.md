@@ -21,7 +21,7 @@
   - PositionIterator
 - **Sequence**
   - Sequence
-- **Iterable/Iterator**
+- **Iterable / Iterator**
 - **Tree**
   - Tree
   - AbstractTree
@@ -29,7 +29,7 @@
   - AbstractBinaryTree
   - LinkedBinaryTree
   - TreeIterator
-- **Comparable/Comparator**
+- **Comparable / Comparator**
 - **Priority Queue**
   - Entry
   - PQEntry
