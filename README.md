@@ -34,3 +34,5 @@
   - AbstractPriorityQueue
   - UnsortedPriorityQueue
   - SortedPriorityQueue
+- **Heap**
+  - HeapPriorityQueue
