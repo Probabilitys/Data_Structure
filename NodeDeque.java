@@ -3,9 +3,9 @@
  */
 
 class EmptyDequeException extends Exception {
-  public EmptyDequeException(String s) {
-      super(s);
-  }
+    public EmptyDequeException(String s) {
+        super(s);
+    }
 }
 
 public class NodeDeque<E> implements Deque<E> {
@@ -73,15 +73,15 @@ public class NodeDeque<E> implements Deque<E> {
     }
 
     public E removeFirst() throws EmptyDequeException {
-      if (isEmpty())
-          throw new EmptyDequeException("Deque is empty.");
-      DLNode<E> first = header.getNext();
-      E o = first.getElement();
-      DLNode<E> second = first.getNext();
-      header.setNext(second);
-      second.setPrev(header);
-      size--;
-          return o;
+        if (isEmpty())
+            throw new EmptyDequeException("Deque is empty.");
+        DLNode<E> first = header.getNext();
+        E o = first.getElement();
+        DLNode<E> second = first.getNext();
+        header.setNext(second);
+        second.setPrev(header);
+        size--;
+            return o;
     }
 
 
