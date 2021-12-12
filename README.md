@@ -37,6 +37,7 @@
   - AdaptablePriorityQueue
 - **Heap**
   - HeapPriorityQueue
+  - HeapAdaptablePriorityQueue
 - **Map / HashMap**
   - Map
   - AbstractMap
