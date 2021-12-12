@@ -40,7 +40,6 @@
 - **Map / HashMap**
   - Map
   - AbstractMap
-  - UnsortedMap
   - UnsortedTableMap
   - SortedMap
   - AbstractSortedMap
