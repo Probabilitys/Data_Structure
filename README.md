@@ -34,5 +34,17 @@
   - AbstractPriorityQueue
   - UnsortedPriorityQueue
   - SortedPriorityQueue
+  - AdaptablePriorityQueue
 - **Heap**
   - HeapPriorityQueue
+- **Map / HashMap**
+  - Map
+  - AbstractMap
+  - UnsortedMap
+  - UnsortedTableMap
+  - SortedMap
+  - AbstractSortedMap
+  - SortedTableMap
+  - AbstractHashMap
+  - ChainHashMap
+  - ProbeHashMap
