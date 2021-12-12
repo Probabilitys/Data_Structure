@@ -29,6 +29,7 @@
   - LinkedBinaryTree
   - TreeIterator
 - **Comparable / Comparator**
+  - DefaultComparator
 - **Priority Queue**
   - Entry / PQEntry
   - AbstractPriorityQueue
