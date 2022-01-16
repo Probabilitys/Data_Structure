@@ -38,7 +38,7 @@ public class LinkedPositionlList<E> implements PositionalList{
     private int size = 0;  // number of elements storing in the list
 
     /** Create a empty list with header and trailer */
-    DoublyLinkedListList() {
+    LinkedPositionlList() {
         header = new Node<E>(null, null, null);
         trailer = new Node<E>(null, header, null);
         header.setNext(trailer);
