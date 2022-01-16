@@ -122,7 +122,7 @@ public class LinkedPositionlList<E> implements PositionalList<E> {
     /** Replaces the element at p and returns the old element. */
     public E set(Position<E> p, E e) throws IllegalArgumentException {
         Node node = validate(p);
-        E temp = node.getElement();
+        E temp = (E) node.getElement();
         node.setElement(e);
         return temp;
     }
@@ -130,7 +130,7 @@ public class LinkedPositionlList<E> implements PositionalList<E> {
     /** Remove the element at p and returns the removed element. */
     public E remove(Position<E> p) throws IllegalArgumentException {
         Node node = validate(p);
-        E temp = node.getElement();
+        E temp = (E) node.getElement();
         node.getPrev().setNext(node.getNext());
         node.getNext().setPrev(node.getPrev());
         size--;
