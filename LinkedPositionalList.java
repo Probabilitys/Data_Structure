@@ -3,7 +3,7 @@
  * provides a natural implementation of the List ADT
  */
 
-public class LinkedPositionlList<E> implements PositionalList{
+public class LinkedPositionlList<E> implements PositionalList<E> {
     
 
     //---------------nest Node classs-------------
