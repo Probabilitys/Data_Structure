@@ -20,6 +20,7 @@
   - PositionIterator
 - **Sequence**
   - Sequence
+  - NodeSequence
 - **Iterable / Iterator**
 - **Tree**
   - Tree
