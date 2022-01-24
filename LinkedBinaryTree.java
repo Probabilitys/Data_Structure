@@ -187,9 +187,16 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         node.setParent(node); // our convention for defunct node
         return temp;
     }
+    
+    /** Returns the depth of a certain node. */
+    public int depth(Tree<E> T, position<E> p) {
+        if (T.isroot())
+            return 0;
+        return 1 + depth(T, T.parent(p));
+    }
 
 
-    /** TODO Returns all elements as a iterable collection. */
-    /** TODO Returns all positions as a iterable collection. */
+    /** Returns all elements as a iterable collection. */
+    /** Returns all positions as a iterable collection. */
 
 }
