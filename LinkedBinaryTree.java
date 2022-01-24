@@ -146,17 +146,18 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         Node<E> node = validate(p);
         if (isInternal(p)) throw new IllegalArgumentException("p must be a leaf");
         size += t1.size( ) + t2.size( );
-        if (!t1.isEmpty( )) { 
+        if (!t1.isEmpty()) {
+            Node<E> r1 = checkPosition(t1.root());
             // attach t1 as left subtree of node
-            t1.root.setParent(node);
-            node.setLeft(t1.root);
-            t1.root = null;
+            r1.setParent(node);
+            node.setLeft(r1);
             t1.size = 0;
         }
-        if (!t2.isEmpty( )) { // attach t2 as right subtree of node
-            t2.root.setParent(node);
-            node.setRight(t2.root);
-            t2.root = null;
+        if (!t2.isEmpty( )) { 
+            Node<E> r2 = checkPosition(t2.root());
+            // attach t2 as right subtree of node
+            r2.setParent(node);
+            node.setRight(r2);
             t2.size = 0;
         }
     }
