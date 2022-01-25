@@ -17,6 +17,7 @@
 - **List**
   - PositionalList
   - LinkedPositionalList
+    (NodePositionaList)
   - PositionIterator
 - **Sequence**
   - Sequence
