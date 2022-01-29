@@ -24,4 +24,15 @@ public abstract class AbstractTree<E> implements Tree<E> {
         }
         return h;
     }
+    
+    /** Returns the height of the tree.
+     * Runs in O(n^2) worst-case time.
+     */
+    private int heightBad() {             // works, but quadratic worst-case time
+        int h = 0;
+        for (Position<E> p : positions())
+          if (isExternal(p))                // only consider leaf positions
+            h = Math.max(h, depth(p));
+        return h;
+      }
 }
