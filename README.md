@@ -30,6 +30,9 @@
   - AbstractBinaryTree
   - LinkedBinaryTree
   - TreeIterator
+  - BTNode / BTPosition
+  - BinarySearchTreeMap
+  - AVLTree
 - **Comparable / Comparator**
   - DefaultComparator
 - **Priority Queue**
