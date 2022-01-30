@@ -65,25 +65,25 @@ public class BinarySearchTreeMap<K,V> extends AbstractSortedMap<K,V> {
             }
             // rotate x and y, including transfer of middle subtree
             if (x == y.getLeft()) {
-                relink(y, x.getRight(), true);
-                relink(x, y, false);
+                relink(y, x.getRight(), true);  // x’s right child becomes y’s left
+                relink(x, y, false);  // y becomes x’s right child
             } else {
-                relink(y, x.getLeft(), false);
-                relink(x, y, true);
+                relink(y, x.getLeft(), false);  // x’s left child becomes y’s right
+                relink(x, y, true);  // y becomes left child of x
             }
         }
-    
+
         /** Performs a trinode restructuring of Position x with its parent/grandparent. */
         public BTPosition<Entry<K,V>> restructure(BTPosition<Entry<K,V>> x) {
             BTPosition<Entry<K,V>> y = parent(x);
             BTPosition<Entry<K,V>> z = parent(y);
-            if ((x == right(y)) == (y == right(z))) {
-                rotate(y);
-                return y;
-            } else {
+            if ((x == right(y)) == (y == right(z))) {  // matching alignments
+                rotate(y);  // single rotation (of y)
+                return y;  // y is new subtree root
+            } else {  // opposite alignments
+                rotate(x);  // double rotation (of x)
                 rotate(x);
-                rotate(x);
-                return x;
+                return x;  // x is new subtree root
             }
         }
     } //----------- end of nested BalanceableBinaryTree class -----------
