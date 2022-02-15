@@ -27,6 +27,8 @@ private class ArrayIterator implements Iterator<E> {
 public Iterator<E> iterator() { return new Arrayiterator(); }
 
 
+///////////////////////////////////////////////////////////////////////
+
 
 //----------- nested PositionIterator class ----------------
 private class PositionIterator<Position<E>> implements Iterator<Position<E>> {
