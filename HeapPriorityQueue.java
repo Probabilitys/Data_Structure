@@ -2,6 +2,8 @@
  * Implements priority queue using an array-based heap.
  */
 
+import java.util.ArrayList;
+
 public class HeapPriorityQueue extends AbstractPriorityQueue {
     
     /** primary collection of priority queue entries */
@@ -11,6 +13,19 @@ public class HeapPriorityQueue extends AbstractPriorityQueue {
     public HeapPriorityQueue() { super(); }
     /** Constructor using a given comparator. */
     public HeapPriorityQueue(Comparator<K> comp) { super(comp); }
+    /** Creates a priority queue initialized with the given key-value pairs. */
+    public HeapPriorityQueue(K[] keys, V[] values) {
+        super();
+        for (int j=0; j<Math.min(keys.length, values.length); j++)
+            heap.add(new PQEntry<>(key[j], values[j]));
+        heapify();
+    }
+    /** Performs a bottom-up construction of the heap in linear time. */
+    protected void heapify() {
+        int startIndex = parent(size() - 1);
+        for (int j=startIndex; j>=0; j--)
+            downheap(j);
+    }
 
     // protected utilities
     protected int parent(int j) { return (j-1)/2; }
@@ -64,10 +79,10 @@ public class HeapPriorityQueue extends AbstractPriorityQueue {
     /** Inserts a key-value pair and returns the entry created. */
     public Entry<K,V> insert(K key, V value) throws IllegalArgumentException {
         checkKey(key);
-        Entry<K,V> entry = new PQEntry<>(key, value);
-        heap.add(entry);
+        Entry<K,V> newEntry = new PQEntry<>(key, value);
+        heap.add(newEntry);
         upheap(heap.size() - 1);
-        return entry;
+        return newEntry;
     }
     /** Removes and returns the entry with smallest key (if any). */
     public Entry<K,V> removeMin() {
