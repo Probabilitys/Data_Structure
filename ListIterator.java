@@ -1,4 +1,4 @@
-
+///////////////// Sample Array Iterator ////////////////////
 //------------ nested ArrayIterator class ------------------
 private class ArrayIterator implements Iterator<E> {
 
@@ -27,7 +27,8 @@ private class ArrayIterator implements Iterator<E> {
 public Iterator<E> iterator() { return new Arrayiterator(); }
 
 
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////// A sample Iterator for lists below ///////////////////////
 
 
 //----------- nested PositionIterator class ----------------
@@ -54,21 +55,15 @@ private class PositionIterator<Position<E>> implements Iterator<Position<E>> {
     }
 }  //------------ end of nested PositionIterator class -----------
 
-
-
 //---------- nested PositionIterable class ------------
 private class PositionIterable implements Iterable<Position<E>> {
     public Iterator<Position<E>> iterator() { return new PositionIterator(); }
 }  //------------ end of nested PositionIterable class ------------
 
-
-
 /** Returns an iterable representation of the lsit's positions. */
 public Iterable<Position<E>> positions() {
     return new PositionIterable();
 }
-
-
 
 //-------------- nested ElementIterator class -------------
 private class ElementIterator<E> implements Iterator<E> {
@@ -77,8 +72,6 @@ private class ElementIterator<E> implements Iterator<E> {
     public E next() { return posIterator.next().getElement(); }
     public void remove() { posIterator.remove();}
 }
-
-
 
 /** Returns an iterator of the elements stored in the list. */
 public Iterator<E> iterator() { return new ElementIterator(); }
