@@ -50,7 +50,7 @@ private class PositionIterator<Position<E>> implements Iterator<Position<E>> {
     /** Removes the element returned by most recent call to next. */
     public void remove() throws IllegalStateException {
         if(recent == null) throw new IllegalStateException("Nothing to remove");
-        DoublyLinkedListList.this.remove(recent);
+        DoublyLinkedList.this.remove(recent);
         recent = null;
     }
 }  //------------ end of nested PositionIterator class -----------
