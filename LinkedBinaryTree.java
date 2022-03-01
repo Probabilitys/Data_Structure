@@ -1,221 +1,118 @@
-/**
- * Concrete implementation of a binary tree, using a node-based, linked structure
- */
+/** An implementation of the BinaryTree interface by means of a linked structure. */
 
-public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
-    
-
-    //---------nested node class----------------
-    protected static class Node<E> implements Position<E> {
-
-        private Node<E> parent;
-        private Node<E> left;
-        private Node<E> right;
-        private E element;
-
-        /** Contruct a new node. */
-        public Node(Node<E> p, Node<E> l, Node<E> r, E e) {
-            parent = p;
-            left = l;
-            right = r;
-            element = e;
-        }
-
-        /** accessor methods */
-        public Node<E> getParent() { return parent; }
-        public Node<E> getLeft() { return left; }
-        public Node<E> getRight() { return right; }
-        public E getElement() { return element; }
-
-        /** mutator methods */
-        public void setParent(Node<E> p) { parent = p; }
-        public void setLeft(Node<E> l) { left = l; }
-        public void setRight(Node<E> r) { right = r; }
-        public void setElement(E e) { element = e; }
-    }  //------------ end of Nested Node class
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Random;
 
 
-    /** Factory function to create a new node storing element e. */
-    protected Node<E> createNode(Node<E> p, Node<E> l, Node<E> r, E e) {
-        return new Node<E>(p, l, r, e);
-    }
+public class LinkedBinaryTree<E> implements BinaryTree<E> {
 
-    // instance variables
-    protected Node<E> root;
-    private int size;
+    protected BTPosition<E> root; // reference to the root
+    protected int size;  // number of nodes
 
-    // constructor
+    /**  Creates an empty binary tree. */
     public LinkedBinaryTree() {
-        root = null;
+        root = null;  // start with an empty tree
         size = 0;
     }
-
-    // nonpublic utility
-    /** Validate the position and return it as a node. */
-    protected Node<E> checkPosition(Position<E> p) throws InvalidPositionException {
-        if (!(p instanceof Node))
-            throw new InvalidPositionException("Invalid position.");
-        Node<E> node = (Node<E>) p;
-        if (node.getParent() == node)
-            throw new InvalidPositionException("Position is no longer in the tree.");
-        return node;
-    }
-
-    /** Returns the number of elements in the tree. */
+    
+    /** Returns the number of nodes in the tree. */
     public int size() { return size; }
 
-    /** Returns true if there is no elements storing in the tree. */
-    public boolean isEmpty() { return size==0; }
+    /** Returns whether the tree is empty. */
+    public boolean isEmpty() { return size() == 0; }
 
-    /** Returns the root of tree as a position, or null if the tree is empty. */
-    public Position<E> root() { return root; }
-
-    /** Returns the position of p's parent, or null if p is the root. */
-    public Position<E> parent(Position<E> p) throws InvalidPositionException {
-        Node<E> v = checkPosition(p);
-        return p.getParent();
+    /** Returns whether a node is internal. */
+    public boolean isInternal(Position<E> v) throws InvalidPositionException {
+        BTPosition<E> vv = checkPosition(v);
+        return hasLeft(vv) || hasRight(vv);
     }
 
-    /** Returns the position of p's left child. */
-    public Position<E> left(Position<E> p) throws InvalidPositionException {
-        Node<E> v = checkPosition(p);
-        return p.getLeft();
+    /** Returns whether a given node is external. */
+    public boolean isExternal(Position<E> v) throws InvalidPositionException {
+        //checkPosition(v);  // auxiliary method
+        return !isInternal(v);
     }
 
-    /** Returns the position of p's right child. */
-    public Position<E> right(Position<E> p) throws InvalidPositionException {
-        Node<E> v = checkPosition(p);
-        return p.getRight();
+    /** Returns whether a node is the root. */
+    public boolean isRoot(Position<E> v) throws InvalidPositionException {
+        // your work is here.
+        BTPosition<E> vv = checkPosition(v);
+        return vv == root;
     }
 
-    /** Returns true if position p has a left child. */
-    boolean hasLeft(Position<E> p) throws IllegalArgumentException {
-        return left(p) != null;
+    /** Returns whether a node has a left child. */
+    public boolean hasLeft(Position<E> v) throws InvalidPositionException {
+        // Your work is here.
+        BTPosition<E> vv = checkPosition(v);
+        return (vv.getLeft() != null);
     }
 
-    /** Returns true if position p has a right child. */
-    boolean hasRight(Position<E> p) throws IllegalArgumentException {
-        return right(p) != null;
+    public boolean hasRight(Position<E> v) throws InvalidPositionException {
+        BTPosition<E> vv = checkPosition(v);
+        return (vv.getRight() != null);
     }
 
-    /** Place element e at root of an empty tree and return its new position. */
-    public Position<E> addRoot(E e) throws IllegalStateException {
-        if (!isEmpty()) throw new IllegalStateException("The tree is not empty.");
-        root = createNode(null, null, null, e);
-        size++;
-        return root();
+    /** Returns the root of the tree. */
+    public Position<E> root() throws EmptyTreeException {
+        if (root == null)
+            throw new EmptyTreeException("The tree is empty");
+        return root;
     }
 
-    /** Create a new left child of position p storing element e and returns its new position. */
-    public Position<E> addLeft(Position<E> p, E e)
-                        throws InvalidPositionException {
-        Node<E> parent = checkPosition(p);
-        if (parent.getLeft() != null)
-            throw new InvalidPositionException("The position already has a left child.");
-        Node<E> leftChild = createNode(parent, null, null, e);
-        parent.setLeft(leftChild);
-        size++;
-        return leftChild;
+    /** Returns the left child of a node. */
+    public Position<E> left(Position<E> v)
+        throws InvalidPositionException, BoundaryViolationException {
+        // Your work is here.
+        BTPosition<E> vv = checkPosition(v);
+        Position<E> leftPos = vv.getLeft();
+        if (leftPos == null)
+            throw new BoundaryViolationException("No left child");
+        return leftPos;
     }
 
-    /** Create a new right child of position p storingn element e and returns its new position. */
-    public Position<E> addRight(Position<E> p, E e) 
-                        throws InvalidPositionException {
-        Node<E> parent = checkPosition(p);
-        if (parent.getRight() != null)
-            throw new InvalidPositionException("The position already has a right child.");
-        Node<E> rightChild = createNode(parent, null, null, e);
-        parent.setRight(rightChild);
-        size++;
-        return rightChild;
+    public Position<E> right(Position<E> v)
+        throws InvalidPositionException, BoundaryViolationException {
+        BTPosition<E> vv = checkPosition(v);
+        Position<E> rightPos = vv.getRight();
+        if (rightPos == null)
+            throw new BoundaryViolationException("No right child");
+        return rightPos;
     }
 
-    /** Replaces the element at position p with a new element e and returns the replaced element. */
-    public E replace(Position<E> p, E e) throws InvalidPositionException {
-        Node<E> node = checkPosition(p);
-        E temp = node.getElement();
-        node.setElement(e);
-        return temp;
-    }
-    
-    /** Attaches trees t1 and t2 as left and right subtrees of external p. */
-    public void attach(Position<E> p, LinkedBinaryTree<E> t1,
-        LinkedBinaryTree<E> t2) throws IllegalArgumentException {
-        Node<E> node = validate(p);
-        if (isInternal(p)) throw new IllegalArgumentException("p must be a leaf");
-        size += t1.size( ) + t2.size( );
-        if (!t1.isEmpty()) {
-            Node<E> r1 = checkPosition(t1.root());
-            // attach t1 as left subtree of node
-            r1.setParent(node);
-            node.setLeft(r1);
-            t1.size = 0;
-        }
-        if (!t2.isEmpty( )) { 
-            Node<E> r2 = checkPosition(t2.root());
-            // attach t2 as right subtree of node
-            r2.setParent(node);
-            node.setRight(r2);
-            t2.size = 0;
-        }
+
+    /** Returns the parent of a node. */
+    public Position<E> parent(Position<E> v)
+        throws InvalidPositionException, BoundaryViolationException {
+        BTPosition<E> vv = checkPosition(v);
+        Position<E> parentPos = vv.getParent();
+        if (parentPos == null)
+        throw new BoundaryViolationException("No parent");
+        return parentPos;
     }
 
-    /** Removes the node at Position p and replaces it with its child, if any. */
-    public E remove(Position<E> p) throws IllegalArgumentException {
-        Node<E> node = validate(p);
-        if (numChildren(p) == 2)
-            throw new IllegalArgumentException("p has two children");
-        Node<E> child = (node.getLeft( ) != null ? node.getLeft( ) : node.getRight( ) );
-        if (child != null)
-            child.setParent(node.getParent( )); // child’s grandparent becomes its parent
-        if (node == root)
-            root = child; // child becomes root
-        else {
-            Node<E> parent = node.getParent( );
-            if (node == parent.getLeft( ))
-                parent.setLeft(child);
-            else
-                parent.setRight(child);
-        }
-        size--;
-        E temp = node.getElement( );
-        node.setElement(null); // help garbage collection
-        node.setLeft(null);
-        node.setRight(null);
-        node.setParent(node); // our convention for defunct node
-        return temp;
-    }
-    
-    /** Returns the depth of a certain node. */
-    public int depth(Tree<E> T, position<E> p) {
-        if (T.isroot())
-            return 0;
-        return 1 + depth(T, T.parent(p));
+    /** Returns an iterable collection of the children of a node. */
+    public Iterable<Position<E>> children(Position<E> v)
+        throws InvalidPositionException, BoundaryViolationException {
+        ArrayList<Position<E>> children = new ArrayList<Position<E>>();
+        if (hasLeft(v))
+            children.add(left(v));
+        if (hasRight(v))
+            children.add(right(v));
+        return children;
     }
 
-    /** Returns the height of a tree. */
-    public int height1 (Tree<E> T) {
-        int h = 0;
-        for (Position<E> v : T.positions()) {
-            if (T.isExternal(v))
-                h = Math.max(h, depth(T, v));
-        }
-        return h;
-    }
-    public  int height2 (Tree<E> T, Position<E> v) {
-        if (T.isExternal(v)) return 0;
-        int h = 0;
-        for (Position<E> w : T.children(v))
-            h = Math.max(h, height2(T, w));
-        return 1 + h;
-    }
-
-    /** Returns an iterable collection of all positions. */
+    /** Returns an iterable collection of the tree nodes. */
     public Iterable<Position<E>> positions() {
         ArrayList<Position<E>> positions = new ArrayList<Position<E>>();
-        if(size != 0)
-            inorderPositions(root(), positions);  // assign positions in inorder
-        return positions;
+        try {
+            if(size != 0)
+                inorderPositions(root(), positions);  // assign positions in inorder
+            return positions;
+        } catch (EmptyTreeException | InvalidPositionException |
+        BoundaryViolationException err) {
+            return positions;
+        }
     }
 
     /** Returns an iterator of the elements stored at the nodes */
@@ -227,4 +124,267 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return  elements;  // An iterator of elements
     }
 
+    /** Replaces the element at a node. */
+    public E replace(Position<E> v, E o)
+        throws InvalidPositionException {
+        BTPosition<E> vv = checkPosition(v);
+        E temp = v.element();
+        vv.setElement(o);
+        return temp;
+    }
+
+    // Additional accessor method
+    /** Return the sibling of a node */
+    public Position<E> sibling(Position<E> v)
+        throws InvalidPositionException, BoundaryViolationException {
+        BTPosition<E> vv = checkPosition(v);
+        BTPosition<E> parentPos = vv.getParent();
+        if (parentPos != null) {
+            BTPosition<E> sibPos;
+            BTPosition<E> leftPos = parentPos.getLeft();
+            if (leftPos == vv)
+                sibPos = parentPos.getRight();
+            else
+                sibPos = parentPos.getLeft();
+            if (sibPos != null)
+                return sibPos;
+        }
+        throw new BoundaryViolationException("No sibling");
+    }
+
+    // Additional update methods
+    /** Adds a root node to an empty tree */
+    public Position<E> addRoot(E e) throws NonEmptyTreeException {
+        if(!isEmpty())
+            throw new NonEmptyTreeException("Tree already has a root");
+        size = 1;
+        root = createNode(e,null,null,null);
+        return root;
+    }
+
+    /** Inserts a left child at a given node. */
+    public Position<E> insertLeft(Position<E> v, E e)
+        throws InvalidPositionException {
+        BTPosition<E> vv = checkPosition(v);
+        Position<E> leftPos = vv.getLeft();
+        if (leftPos != null)
+            throw new InvalidPositionException("Node already has a left child");
+        BTPosition<E> ww = createNode(e, vv, null, null);
+        vv.setLeft(ww);
+        size++;
+        return ww;
+    }
+
+    /** Inserts a right child at a given node. */
+    public Position<E> insertRight(Position<E> v, E e)
+        throws InvalidPositionException {
+        BTPosition<E> vv = checkPosition(v);
+        Position<E> rightPos = vv.getRight();
+        if (rightPos != null)
+            throw new InvalidPositionException("Node already has a right child");
+        BTPosition<E> ww = createNode(e, vv, null, null);
+        vv.setRight(ww);
+        size++;
+        return ww;
+    }
+
+    /** Removes a node with zero or one child. */
+    public E remove(Position<E> v)
+        throws InvalidPositionException {
+        BTPosition<E> vv = checkPosition(v);
+        BTPosition<E> leftPos = vv.getLeft();
+        BTPosition<E> rightPos = vv.getRight();
+        if (leftPos != null && rightPos != null)
+            throw new InvalidPositionException("Cannot remove node with two children");
+        BTPosition<E> ww;  // the only child of v, if any
+        if (leftPos != null)
+            ww = leftPos;
+        else if (rightPos != null)
+            ww = rightPos;
+        else   // v is a leaf
+            ww = null;
+        if (vv == root) {  // v is the root
+            if (ww != null)
+                ww.setParent(null);
+            root = ww;
+        }
+        else {   // v is not the root
+            BTPosition<E> uu = vv.getParent();
+            if (vv == uu.getLeft())
+                uu.setLeft(ww);
+            else
+                uu.setRight(ww);
+            if(ww != null)
+                ww.setParent(uu);
+        }
+        size--;
+        return v.element();
+    }
+
+    /** Attaches two trees to be subtrees of an external node. */
+    public void attach(Position<E> v, BinaryTree<E> T1, BinaryTree<E> T2)
+        throws InvalidPositionException, EmptyTreeException {
+        BTPosition<E> vv = checkPosition(v);
+        if (isInternal(v))
+            throw new InvalidPositionException("Cannot attach from internal node");
+        if (!T1.isEmpty()) {
+            BTPosition<E> r1 = checkPosition(T1.root());
+            vv.setLeft(r1);
+            r1.setParent(vv);  // T1 should be invalidated
+        }
+        if (!T2.isEmpty()) {
+            BTPosition<E> r2 = checkPosition(T2.root());
+            vv.setRight(r2);
+            r2.setParent(vv);  // T2 should be invalidated
+        }
+
+        // update size here
+        size += ( T1.size() + T2.size() );
+
+    }
+    /** If v is a good binary tree node, cast to BTPosition, else throw exception */
+    protected BTPosition<E> checkPosition(Position<E> v)
+        throws InvalidPositionException {
+        // Your work is here.
+        if (v == null)
+            throw new InvalidPositionException("Invalid null position.");
+        if (!(v instanceof BTNode))
+            throw new InvalidPositionException("This is not a tree node.");
+        BTNode<E> vv = (BTNode<E>) v;
+        return vv;
+    }
+
+    /** Creates a new binary tree node */
+    protected BTPosition<E> createNode(E element, BTPosition<E> parent,
+        BTPosition<E> left, BTPosition<E> right) {
+        return new BTNode<E>(element, parent, left, right); 
+    }
+
+    /** 
+     * Creates a list storing the the nodes in the subtree of a node,
+     * ordered according to the ineorder traversal of the subtree. 
+     */
+    protected void inorderPositions(Position<E> v, ArrayList<Position<E>> pos)
+        throws InvalidPositionException, BoundaryViolationException {
+
+    // Your work is here.
+        checkPosition(v);
+        if (hasLeft(v))
+            inorderPositions(left(v), pos);
+        pos.add(v);
+        if (hasRight(v))
+            inorderPositions(right(v), pos);
+    }
+
+
+    public int depth (Tree<E> T, Position<E> v) 
+        throws InvalidPositionException, BoundaryViolationException {
+        if (T.isRoot(v))
+            return 0;
+        else
+            return 1 + depth(T, T.parent(v));
+    }
+
+    public int height1 (Tree<E> T) 
+        throws InvalidPositionException, BoundaryViolationException {
+        int h = 0;
+        for (Position<E> v : T.positions()) {
+            if (T.isExternal(v))
+                h = Math.max(h, depth(T, v));
+        }
+        return h;
+    }
+
+    public int height2 (Tree<E> T, Position<E> v) 
+        throws InvalidPositionException, BoundaryViolationException {
+        if (T.isExternal(v)) return 0;
+        int h = 0;
+        for (Position<E> w : T.children(v))
+            h = Math.max(h, height2(T, w));
+        return 1 + h;
+    }
+
+
+    public static void main(String[] args) 
+        throws InvalidPositionException, EmptyTreeException,
+        BoundaryViolationException, NonEmptyTreeException {
+
+        LinkedBinaryTree <Integer> T = new LinkedBinaryTree<Integer>();
+        Random rand = new Random();
+
+        int n = 100;
+        int j;
+
+        if (T.isEmpty())
+            T.addRoot(rand.nextInt(1000));
+
+        System.out.println("The root element is " + T.root().element());
+
+        Position<Integer> p = T.root();
+
+        for (int i = 0; i <= n; i++) {
+            j = rand.nextInt(1000);
+            if ( j % 2 == 0) {
+                T.insertLeft(p, j);
+                p = T.left(p);
+            }
+            else {
+                T.insertRight(p, j);
+                p = T.right(p);
+            }
+        }
+
+        System.out.println("The size of tree is " + T.size());
+        System.out.println();
+        System.out.println("The height1 is " + T.height1(T));
+        System.out.println();
+        System.out.println("The height2 is " + T.height2(T, T.root()));
+        System.out.println();
+        System.out.println("The depth of the root is " + T.depth(T, T.root()));
+        System.out.println();
+        System.out.println("We print all elements in the tree");
+
+        int count = 0;
+        for (Integer in: T.iterator()) {
+            System.out.print(in + " ");
+            ++count;
+            if(count % 10==0)
+                System.out.println();
+        }
+            System.out.println();
+            System.out.println();
+
+    }
+}
+
+class InvalidPositionException extends Exception {
+    
+    // Constructor method
+    public InvalidPositionException(String str) {
+        super(str);
+    }
+}
+
+class BoundaryViolationException extends Exception {
+    
+    // Constructor method
+    public BoundaryViolationException(String str) {
+        super(str);
+    }
+}
+
+class EmptyTreeException extends Exception {
+    
+    // Constructor method
+    public EmptyTreeException(String str) {
+        super(str);
+    }
+}
+
+class NonEmptyTreeException extends Exception {
+    
+    // Constructor method
+    public NonEmptyTreeException(String str) {
+        super(str);
+    }
 }
