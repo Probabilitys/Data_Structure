@@ -145,24 +145,23 @@ public class NodePositionList<E> implements PositionList<E> {
         return temp;
     }
     
-   /**
-   * Returns a textual representation of a given node list
-   */
-   public static <E> String toString(PositionList<E> l) {
-      Iterator<E> it = l.iterator();
-      String s = "[";
-      while (it.hasNext()) {
-         s += it.next();	// implicit cast of the next element to String
-         if (it.hasNext())
-	        s += ", ";
-      }
+    /**
+     * Returns a textual representation of a given node list
+     */
+    public static <E> String toString(PositionList<E> l) {
+       Iterator<E> it = l.iterator();
+       String s = "[";
+       while (it.hasNext()) {
+	  s += it.next();	// implicit cast of the next element to String
+	  if (it.hasNext())
+	      s += ", ";
+       }
+       return s + "]";
+    }
 
-      return s + "]";
-  }
-
-  public String toString () {
-	  return toString (this);
-   }
+    public String toString () {
+	 return toString (this);
+    }
 
 
     //----------- nested PositionIterator class ----------------
