@@ -4,13 +4,11 @@
 
 public class BTNode<E> implements BTPosition<E> {
 
-    private Node<E> parent;
-    private Node<E> left;
-    private Node<E> right;
+    private BTPosition<E> parent, left, right;
     private E element;
 
     /** Contruct a new node. */
-    public Node( E e, Node<E> p, Node<E> l, Node<E> r) {
+    public BTNode( E e, BTPosition<E> p, BTPosition<E> l, BTPosition<E> r) {
         element = e;
         parent = p;
         left = l;
@@ -18,14 +16,14 @@ public class BTNode<E> implements BTPosition<E> {
     }
 
     /** accessor methods */
-    public Node<E> getParent() { return parent; }
-    public Node<E> getLeft() { return left; }
-    public Node<E> getRight() { return right; }
+    public BTPosition<E> getParent() { return parent; }
+    public BTPosition<E> getLeft() { return left; }
+    public BTPosition<E> getRight() { return right; }
     public E getElement() { return element; }
 
     /** mutator methods */
-    public void setParent(Node<E> p) { parent = p; }
-    public void setLeft(Node<E> l) { left = l; }
-    public void setRight(Node<E> r) { right = r; }
+    public void setParent(BTPosition<E> p) { parent = p; }
+    public void setLeft(BTPosition<E> l) { left = l; }
+    public void setRight(BTPosition<E> r) { right = r; }
     public void setElement(E e) { element = e; }
 }
