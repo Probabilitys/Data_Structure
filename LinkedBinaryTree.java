@@ -195,6 +195,23 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return 1 + depth(T, T.parent(p));
     }
 
+    /** Returns the height of a tree. */
+    public int height1 (Tree<E> T) {
+        int h = 0;
+        for (Position<E> v : T.positions()) {
+            if (T.isExternal(v))
+                h = Math.max(h, depth(T, v));
+        }
+        return h;
+    }
+    public  int height2 (Tree<E> T, Position<E> v) {
+        if (T.isExternal(v)) return 0;
+        int h = 0;
+        for (Position<E> w : T.children(v))
+            h = Math.max(h, height2(T, w));
+        return 1 + h;
+    }
+
 
     /** Returns all elements as a iterable collection. */
     /** Returns all positions as a iterable collection. */
