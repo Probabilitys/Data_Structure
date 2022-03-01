@@ -1,5 +1,3 @@
-import java.nio.file.InvalidPathException;
-
 /**
  * Concrete implementation of a binary tree, using a node-based, linked structure
  */
@@ -212,8 +210,21 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return 1 + h;
     }
 
+    /** Returns an iterable collection of all positions. */
+    public Iterable<Position<E>> positions() {
+        ArrayList<Position<E>> positions = new ArrayList<Position<E>>();
+        if(size != 0)
+            inorderPositions(root(), positions);  // assign positions in inorder
+        return positions;
+    }
 
-    /** Returns all elements as a iterable collection. */
-    /** Returns all positions as a iterable collection. */
+    /** Returns an iterator of the elements stored at the nodes */
+    public Iterable<E> iterator() {
+        Iterable<Position<E>> positions = positions();
+        ArrayList<E> elements = new ArrayList<E>();
+        for (Position<E> pos: positions)
+            elements.add(pos.element());
+        return  elements;  // An iterator of elements
+    }
 
 }
