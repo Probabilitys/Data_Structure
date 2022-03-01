@@ -14,6 +14,7 @@ public Iterator<E> iterator() { return new ElementIterator(); }
 public Iterable<Position<E>> positions() { return preorder(); }
 
 
+////////////////////////////////////////////////////////////////////
 // preorder traversal
 // can be used as part of (Abstract)Tree class
 /** Adds positions of the subtree rooted at Position p to the given snapshot by preorder traversal. */
@@ -31,6 +32,7 @@ public Iterable<Position<E>> preorder() {
 }
 
 
+///////////////////////////////////////////////////////////////////
 // postorder traversal
 /** Adds positions of the subtree rooted at Position p to the given snapshot by postorder traversal. */
 private void postorderSubtree(Position<E> p, List<Position<E>> snapshot) {
@@ -47,6 +49,7 @@ public Iterable<Position<E>> postorder() {
 }
 
 
+///////////////////////////////////////////////////////////////////////////
 // inorder traversal
 /** Adds positions of the subtree rooted at Positon p to the given shopshot by inorder traversal. */
 private void inorderSubtree(Position<E> p, List<Position<E>> snapshot) {
@@ -68,6 +71,8 @@ public Iterable<Position<E>> position() {
     return inorder();  // can use other traversal mehtods
 }
 
+
+//////////////////////////////////////////////////////////////////////////
 // breadth first order
 /** Returns an iterable collection of positions of the tree in breadth-first order. */
 public Iterable<Position<E>> breadthfirst() {
