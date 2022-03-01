@@ -75,3 +75,64 @@ private class ElementIterator<E> implements Iterator<E> {
 
 /** Returns an iterator of the elements stored in the list. */
 public Iterator<E> iterator() { return new ElementIterator(); }
+
+
+
+////////////////////////////////////////////////////////////////////
+//////////////////// Another implementation ///////////////////////
+/** Returns an iterator of all the elements in the list. */
+   public Iterator<E> iterator() {
+      return new ElementIterator<E>(this);
+   }
+
+  /**
+   * Returns an iterable collection of all the nodes in the list.
+   */
+   public Iterable<Position<E>> positions() {     // create a list of posiitons
+      PositionList<Position<E>> P = new NodePositionList<Position<E>>();
+      if (!isEmpty()) {
+         Position<E> p = first();
+         while (true) {
+            P.addLast(p); // add position p as the last element of list P
+	        if (p == last())
+	           break;
+            p = next(p);
+         }
+      }
+      return P; // return P as our Iterable object
+   }
+
+   public class ElementIterator<E> implements java.util.Iterator<E> {
+
+      protected PositionList<E> list;	// the underlying list
+      protected Position<E> cursor; 	// the next position
+   
+     /**
+      * Creates an element iterator over the given list.
+      */
+      public ElementIterator(PositionList<E> L) {
+         list = L;
+         cursor = (list.isEmpty()) ? null : list.first();
+     }
+   
+     public boolean hasNext() {
+        return (cursor != null);
+     }
+   
+     public E next()
+            throws NoSuchElementException {
+        if (cursor == null)
+           throw new NoSuchElementException("No next element");
+   
+        E toReturn = cursor.element();
+        cursor = (cursor == list.last()) ? null : list.next(cursor);
+   
+        return toReturn;
+     }
+   
+     public void remove() {
+        throw new OperationNotSupportedException("Remove operation not supported!");
+     }
+   
+   }
+
