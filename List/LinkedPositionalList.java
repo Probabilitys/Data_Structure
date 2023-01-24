@@ -260,8 +260,6 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
             System.out.println(posIter.next());
         }
 
-
-
         // test the List in for loop
         System.out.println("Element Iterator in for loop: ");
         for (int i : l) {
@@ -275,9 +273,6 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
             // remove all element
             elemIter.remove();
         }
-
-
-
 
         System.out.println("empty: " + l.isEmpty());
     }
