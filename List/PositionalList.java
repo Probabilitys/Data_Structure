@@ -1,11 +1,13 @@
 package List;
 
+import java.util.Iterator;
+
 /**
  * Positional List ADT
  * a sequence of positions storing objects
  */
 
-public interface PositionalList<E> {
+public interface PositionalList<E> extends Iterable<E> {
 
     /** Returns the number of elements. */
     public int size();
@@ -50,12 +52,12 @@ public interface PositionalList<E> {
             throws InvalidPositionException;
 
     /** Return an iterable instance for all the positions. */
-    public Iterable<Position<E>> positions();
+    public Iterable<Position<E>> positionsIterable();
 
     /** Return an iterator for all the positions. */
-    public Iterator<Position<E>> iterator();
+    public Iterator<E> iterator();
 
     /** Return an iterator for all the elements. */
-    public Iterator<E> elements();
+    public Iterator<Position<E>> positionsIterator();
 
 }
