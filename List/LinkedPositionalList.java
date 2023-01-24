@@ -1,5 +1,6 @@
 package List;
 
+import java.util.Iterator;
 
 /**
  * This class implemented the PositionList interface with node structure
@@ -153,18 +154,12 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
      * Returns a textual representation of a given node list
      */
     public static <E> String toString(PositionalList<E> l) {
-        Iterator<E> it = l.elements();
+        Iterator<E> it = l.iterator();
         String s = "[";
-        try {
-            while (it.hasNext()) {
-                s += it.next();	// implicit cast of the next element to String
-                if (it.hasNext())
-                    s += ", ";
-            }
-        }
-        catch (BoundaryViolationException bve)
-        {
-            System.err.println(bve.getMessage());
+        while (it.hasNext()) {
+            s += it.next();	// implicit cast of the next element to String
+            if (it.hasNext())
+                s += ", ";
         }
         return s + "]";
     }
@@ -174,18 +169,18 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
     }
 
     /** Returns an iterable representation of the list's positions. */
-    public Iterable<Position<E>> positions() {
+    public Iterable<Position<E>> positionsIterable() {
         return new PositionIterable(); // create a new instance of the inner class
     }
 
     /** Returns an iterator for all the elements. */
-    public Iterator<Position<E>> iterator() {
-        return new PositionIterator();
+    public Iterator<E> iterator() {
+        return new ElementIterator();
     }
 
     /** Return an iterator for all the positions. */
-    public Iterator<E> elements() {
-        return new ElementIterator();
+    public Iterator<Position<E>> positionsIterator() {
+        return new PositionIterator();
     }
 
 
@@ -202,16 +197,14 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         public boolean hasNext() { return (cursor != null);}
 
         /** Returns the next position in the iterator. */
-        public Position<E> next() throws BoundaryViolationException {
-            if (cursor == null)
-                throw new BoundaryViolationException("No element in the next.");
+        public Position<E> next() {
             recent = cursor;
             try {
                 cursor = after(cursor);
-                return recent;
             } catch(InvalidPositionException err) {
-                throw new BoundaryViolationException("No element in the next.");
+                System.err.println("No element in the next");
             }
+            return recent;
         }
 
         /** Removes the element returned by most recent call to next. */
@@ -244,7 +237,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
     private class ElementIterator implements Iterator<E> {
         Iterator<Position<E>> posIterator = new PositionIterator();
         public boolean hasNext() { return posIterator.hasNext(); }
-        public E next() throws BoundaryViolationException {
+        public E next() {
             return posIterator.next().getElement(); // return element!
         }
         public void remove() throws IllegalStateException {
@@ -254,27 +247,37 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
 
     public static void main(String[] args)
-                    throws BoundaryViolationException {
+            throws BoundaryViolationException {
         LinkedPositionalList<Integer> l = new LinkedPositionalList<>();
         for (int i = 0; i < 10; i++) {
             l.addLast(i);
         }
 
         // test PositionIterator
-        Iterator<Position<Integer>> posIter= l.iterator();
+        Iterator<Position<Integer>> posIter= l.positionsIterator();
         System.out.println("Position Iterator: ");
         while (posIter.hasNext()) {
             System.out.println(posIter.next());
         }
 
-        // test ElementIterator
-        Iterator<Integer> elemIter= l.elements();
-        System.out.println("Element Iterator: ");
+
+
+        // test the List in for loop
+        System.out.println("Element Iterator in for loop: ");
+        for (int i : l) {
+            System.out.println(i);
+        }
+
+        //  remove all elements using iterator
+        Iterator<Integer> elemIter= l.iterator();
         while (elemIter.hasNext()) {
-            System.out.println(elemIter.next());
+            System.out.println("remove: " + elemIter.next());
             // remove all element
             elemIter.remove();
         }
+
+
+
 
         System.out.println("empty: " + l.isEmpty());
     }
