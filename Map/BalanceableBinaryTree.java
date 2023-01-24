@@ -9,7 +9,7 @@ public class BalanceableBinaryTree<K,V> extends LinkedBinaryTree<Entry<K,V>> {
 
     //--------------- nested BSTNode class --------------
     // this class extends the BinaryTree Node class
-    protected static class BSTNode<E> extends BTNode<E> {
+    protected static class BSTNode<E> extends BTPosition<E> {
         int aux = 0;  // stores the auxiliary value
         BSTNode(E e, BTPosition<E> parent, BTPosition<E> leftChild, BTPosition<E> rightChild) {
             super(e, parent, leftChild, rightChild);
@@ -30,7 +30,7 @@ public class BalanceableBinaryTree<K,V> extends LinkedBinaryTree<Entry<K,V>> {
     }
 
     // Overrides node factory function to produce a BSTNode (rather than a Node)
-    protected BTNode<Entry<K,V>> createNode(
+    protected BTPosition<Entry<K,V>> createNode(
             Entry<K,V> e,
             BTPosition<Entry<K,V>> parent,
             BTPosition<Entry<K,V>> left,
